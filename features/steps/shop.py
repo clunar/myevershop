@@ -1,17 +1,23 @@
 from behave import *
 import commandsShop
 
-@given('que el cliente ingresa a la pagina y crea su cuenta exitosamente')
+@given('que el cliente ingresa a la pagina ever shop e inicia sesión exitosamente')
 def step_1(context):
-    commandsShop.ingresarWeb()
-    commandsShop.iniciarSesion()
+    commandsShop.login()
+    commandsShop.createAccount()
 
-#@when('agrega un producto al carrito y completa sus datos')
-#def step_2(context):
-#    commandsCompra.agregarProducto()
-#    commandsCompra.verCarrito()
-#    commandsCompra.completarDatos()
+@when('agrega productos al carrito y completa sus datos')
+def step_2(context):
+    commandsShop.categoryWomen()
+    commandsShop.selectProduct1()
+    commandsShop.categoryWomen()
+    commandsShop.selectProduct2()
+    commandsShop.categoryWomen()
+    commandsShop.selectProduct3()
+   
 
 #@then('realiza la compra exitosamente')
 #def step_3(context):
 #    commandsCompra.finalizarCompra()
+
+

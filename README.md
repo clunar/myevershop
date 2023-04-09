@@ -16,7 +16,11 @@ pip install selenium
 ~~~
 pip install behave behave-html-formatter (instalará behave con reportería)
 ~~~
-4. El driver de Chrome 112.0.5615.49 ya está incluido en la carpeta drivers del proyecto, asegúrese que tiene la misma versión de Chrome instalada
+4. Para instalar las librerias de Python para la librería de Faker
+~~~
+pip install Faker (para generar valores dinámicos)
+~~~
+5. El driver de Chrome 112.0.5615.49 ya está incluido en la carpeta drivers del proyecto, asegúrese que tiene la misma versión de Chrome instalada
 ------------------------
 PARA EJECUTAR LAS PRUEBAS
 
