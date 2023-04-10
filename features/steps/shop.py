@@ -14,10 +14,10 @@ def step_2(context):
     commandsShop.selectProduct2()
     commandsShop.categoryWomen()
     commandsShop.selectProduct3()
+    commandsShop.viewCart()
+    commandsShop.checkout()
+    commandsShop.shippingAddress()
    
-
-#@then('realiza la compra exitosamente')
-#def step_3(context):
-#    commandsCompra.finalizarCompra()
-
-
+@then('se genera su orden exitosamente')
+def step_3(context):
+    commandsShop.shopPayment()

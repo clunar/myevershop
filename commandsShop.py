@@ -1,6 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import Select
 from faker import Faker
 
 fake = Faker()
@@ -33,7 +34,6 @@ def createAccount():
     password.send_keys(passwordFake)
     time.sleep(2)
     driver.save_screenshot("screenshot/4shopDataCreateAccount.png")
-    
     bottonCreateAccount = driver.find_element("xpath", "//button[@type='button']")
     bottonCreateAccount.click()
     time.sleep(2)
@@ -117,20 +117,69 @@ def selectProduct3():
     bottonAdd.click()
     time.sleep(2)
     driver.save_screenshot("screenshot/13AddProduct1.png")
-    bottonContinue = driver.find_element("xpath", "//a[@class='logo-icon']//*[name()='svg']")
-    bottonContinue.click()
+    
+def viewCart():
+    bottonViewCart = driver.find_element("xpath", "//a[@class='add-cart-popup-button']")
+    bottonViewCart.click()
     time.sleep(2)
-    driver.save_screenshot("screenshot/14shopPagHome.png")
-    bottonCart = driver.find_element("xpath", "//a[@class='add-cart-popup-button']")
-    bottonCart.click()
+    driver.save_screenshot("screenshot/14shopCart.png")
+
+def checkout():
+    bottonCheckout = driver.find_element("xpath", "//span[normalize-space()='CHECKOUT']")
+    bottonCheckout.click()
     time.sleep(2)
-    driver.save_screenshot("screenshot/15shopCart.png")
+    driver.save_screenshot("screenshot/15shopCheckout.png")
 
-    
-    
-    
+def shippingAddress():
+    fullNameAddressFake = fake.name()
+    fullNameAddress= driver.find_element("name","address[full_name]")
+    fullNameAddress.send_keys(fullNameAddressFake)
+    telephoneAddressFake = fake.phone_number()
+    telephoneAddress= driver.find_element("name","address[telephone]")
+    telephoneAddress.send_keys(telephoneAddressFake)
+    addressFake = fake.address()
+    address= driver.find_element("name","address[address_1]")
+    address.send_keys(addressFake)
+    cityAddressFake = fake.city()
+    cityAddress= driver.find_element("name","address[city]")
+    cityAddress.send_keys(cityAddressFake)
+    postCodeAddressFake = fake.postcode()
+    postCodeAddress= driver.find_element("name","address[postcode]")
+    postCodeAddress.send_keys(postCodeAddressFake)
+    countryAddress = Select(driver.find_element("name","address[country]"))
+    countryAddress.select_by_value("US")
+    countryAddress = Select(driver.find_element("name","address[province]"))
+    countryAddress.select_by_value("US-DE")
+    time.sleep(2)
+    driver.save_screenshot("screenshot/16shopShippingAddress.png")
+    bottonFreeShipping = driver.find_element("xpath", "//span[@class='radio-unchecked']")
+    bottonFreeShipping.click()
+    bottonContinueToPayment = driver.find_element("xpath", "//span[normalize-space()='Continue to payment']")
+    bottonContinueToPayment.click()
+    time.sleep(2)
+    driver.save_screenshot("screenshot/17shopPayment.png")
 
-   
-    
-
-
+def shopPayment():
+    time.sleep(2)
+    bottonCashOnDelivery = driver.find_element("xpath", "//div[@class='checkout-payment checkout-step']//div//div[1]//div[1]//div[1]//div[1]//div[1]//a[1]//*[name()='svg']")
+    bottonCashOnDelivery.click()
+    time.sleep(2)
+    """"
+    bottonVisa = driver.find_element("xpath", "//div[@class='divide-y border rounded border-divider px-2 mb-2']//div[3]//div[1]//div[1]//div[1]//div[1]//a[1]//*[name()='svg']")
+    bottonVisa.click()
+    campoCardNumber = driver.find_element("xpath", "input[placeholder='Número de tarjeta']")
+    campoCardNumber.send_keys("4242424242424242")
+    cardExpiry = driver.find_element("xpath", "//input[@placeholder='MM / AA']")
+    cardExpiry.send_keys("0424")
+    cvc = driver.find_element("xpath", "//input[@placeholder='CVC']")
+    cvc.send_keys("242")
+    """
+    bottonPlaceOrder = driver.find_element("xpath", "//button[@class='button primary']")
+    bottonPlaceOrder.click()
+    time.sleep(2)
+    driver.save_screenshot("screenshot/18shopOrder.png")
+    fullNameShipping = driver.find_element("xpath", '//*[@id="app"]/div/main/div/div[1]/div/div/div[2]/div[1]/div[2]/div[2]/div/div[1]')
+    valorFullNameShipping = fullNameShipping.get_attribute("value")
+    fullNameBilling = driver.find_element("xpath", '//*[@id="app"]/div/main/div/div[1]/div/div/div[2]/div[2]/div[2]/div[2]/div/div[1]')
+    valorFullNameBilling = fullNameBilling.get_attribute("value")
+    assert valorFullNameShipping == valorFullNameBilling
